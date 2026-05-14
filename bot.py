@@ -433,11 +433,86 @@ async def q_contact(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
 # ─── ОПЛАТА ───────────────────────────────────────────────────────────────────
 async def go_pay(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     q = update.callback_query; await q.answer()
+    lang = ctx.user_data.get('lang', 'ru')
+    if lang == 'uz':
+        text = "💳 *Тариф танланг:*"
+        btns = [
+            [InlineKeyboardButton("🥈 Standard —   (~1 300 000 сўм)", callback_data="tariff_standard")],
+            [InlineKeyboardButton("🥇 Premium —   (~2 600 000 сўм)", callback_data="tariff_premium")],
+            [InlineKeyboardButton("💎 Elite —   (~3 900 000 сўм)", callback_data="tariff_elite")]
+        ]
+    else:
+        text = "💳 *Выберите тариф (12 месяцев):*"
+        btns = [
+            [InlineKeyboardButton("🥈 Standard —   (~1 300 000 сум)", callback_data="tariff_standard")],
+            [InlineKeyboardButton("🥇 Premium —   (~2 600 000 сум)", callback_data="tariff_premium")],
+            [InlineKeyboardButton("💎 Elite —   (~3 900 000 сум)", callback_data="tariff_elite")]
+        ]
+    kb = InlineKeyboardMarkup(btns)
+    await q.edit_message_text(text, parse_mode="Markdown", reply_markup=kb)
+    return PAY_WAIT
+
+async def show_payment(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
+    q = update.callback_query; await q.answer()
+    tariff = q.data.replace('tariff_', '')
+    lang = ctx.user_data.get('lang', 'ru')
+
+    prices = {'standard': ('Standard', '00', '1 300 000'), 'premium': ('Premium', '00', '2 600 000'), 'elite': ('Elite', '00', '3 900 000')}
+    name, usd, uzs = prices[tariff]
+    ctx.user_data['tariff'] = name
+
+    if lang == 'uz':
+        text = (
+            f"💳 *{name} тарифи*
+
+"
+            f"Тўлов суммаси: *{uzs} сўм ({usd})*
+
+"
+            f"━━━━━━━━━━━━━━━━━━━━
+"
+            f"📱 *Click орқали тўланг:*
+
+"
+            f"Рақам: *+998 99 509 09 09*
+"
+            f"Изоҳ: *QADAR {name}*
+
+"
+            f"━━━━━━━━━━━━━━━━━━━━
+"
+            f"_Тўлов амалга оширилгандан сўнг «Тўладим» тугмасини босинг._"
+        )
+    else:
+        text = (
+            f"💳 *Тариф {name}*
+
+"
+            f"Сумма к оплате: *{uzs} сум ({usd})*
+
+"
+            f"━━━━━━━━━━━━━━━━━━━━
+"
+            f"📱 *Оплатите через Click:*
+
+"
+            f"Номер: *+998 99 509 09 09*
+"
+            f"Комментарий: *QADAR {name}*
+
+"
+            f"━━━━━━━━━━━━━━━━━━━━
+"
+            f"_После оплаты нажмите кнопку «Я оплатил»._"
+        )
+
+    btn_label = "✅ Тўладим" if lang == 'uz' else "✅ Я оплатил"
+    back_label = "◀️ Орқага" if lang == 'uz' else "◀️ Назад"
     kb = InlineKeyboardMarkup([
-        [InlineKeyboardButton(t(ctx,'curator_btn'), url="https://t.me/qadar_curator")],
-        [InlineKeyboardButton(t(ctx,'paid_btn'), callback_data="paid_manual")]
+        [InlineKeyboardButton(btn_label, callback_data="paid_manual")],
+        [InlineKeyboardButton(back_label, callback_data="go_pay")]
     ])
-    await q.edit_message_text(t(ctx,'pay_title'), parse_mode="Markdown", reply_markup=kb)
+    await q.edit_message_text(text, parse_mode="Markdown", reply_markup=kb)
     return PAY_WAIT
 
 async def restart(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
@@ -451,16 +526,19 @@ async def paid_manual(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     user = q.from_user
     d = ctx.user_data
     db_update(user.id, status='paid', paid_at=datetime.now().isoformat())
+    tariff = d.get('tariff', '—')
     try:
         await ctx.bot.send_message(
             chat_id=ADMIN_ID,
             text=(
                 f"💳 *ТЎЛОВ АРИЗАСИ — QADAR*\n\n"
+                f"📦 Тариф: *{tariff}*\n"
                 f"👥 {d.get('side','')} | 🌍 {d.get('nationality','')}\n"
                 f"👤 {d.get('fio','')} | 🎂 {d.get('age','')}\n"
                 f"🏙 {d.get('city','')} | 💼 {d.get('work','')}\n"
+                f"📞 {d.get('contact','')}\n"
                 f"📱 @{user.username or user.id}\n\n"
-                f"Тасдиқлаш: /confirm {user.id}"
+                f"✅ Тасдиқлаш: /confirm {user.id}"
             ),
             parse_mode="Markdown"
         )
@@ -608,6 +686,7 @@ def main():
             Q_CONTACT:  [MessageHandler(filters.TEXT & ~filters.COMMAND, q_contact)],
             PAY_WAIT: [
                 CallbackQueryHandler(go_pay, pattern="go_pay"),
+                CallbackQueryHandler(show_payment, pattern="tariff_standard|tariff_premium|tariff_elite"),
                 CallbackQueryHandler(paid_manual, pattern="paid_manual"),
                 CallbackQueryHandler(restart, pattern="restart")
             ],
