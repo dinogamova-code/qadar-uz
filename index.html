@@ -3,818 +3,333 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>QADAR — Премиальный матримониальный клуб</title>
-  <meta name="description" content="Закрытый клуб подбора партнёров для узбекских семей. Конфиденциально. Достойно. По судьбе."/>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <title>QADAR.UZ — Закрытый клуб по устройству судьбы</title>
+  <meta name="description" content="Не сайт знакомств. Закрытый элитарный клуб для интеллигентных семей Узбекистана."/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
-    :root {
-      --gold: #C9A84C;
-      --gold-light: #E8D08A;
-      --gold-dark: #8B6914;
-      --black: #0A0A0A;
-      --dark: #111111;
-      --dark2: #1A1A1A;
-      --cream: #F5F0E8;
-      --cream-dim: rgba(245,240,232,0.7);
-      --white: #FFFFFF;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Raleway', sans-serif;
-      background: var(--black);
-      color: var(--cream);
-      overflow-x: hidden;
-    }
-
-    /* ─── SCROLLBAR ─── */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--black); }
-    ::-webkit-scrollbar-thumb { background: var(--gold-dark); }
-
-    /* ─── NAV ─── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 24px 60px;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, transparent 100%);
-      transition: background 0.4s;
-    }
-    nav.scrolled { background: rgba(10,10,10,0.97); padding: 16px 60px; }
-
-    .logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 28px; font-weight: 300; letter-spacing: 8px;
-      color: var(--gold); text-decoration: none;
-    }
-    .logo span { color: var(--cream); }
-
-    .nav-links { display: flex; gap: 36px; list-style: none; }
-    .nav-links a {
-      font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
-      color: var(--cream-dim); text-decoration: none; font-weight: 400;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover { color: var(--gold); }
-
-    .nav-cta {
-      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-      color: var(--black); background: var(--gold);
-      padding: 10px 24px; text-decoration: none; font-weight: 600;
-      transition: background 0.3s, transform 0.2s;
-    }
-    .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
-
-    /* ─── HERO ─── */
-    .hero {
-      position: relative; height: 100vh; min-height: 700px;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-    }
-
-    .hero-slider { position: absolute; inset: 0; }
-    .hero-slide {
-      position: absolute; inset: 0;
-      background-size: cover; background-position: center;
-      opacity: 0; transition: opacity 1.8s ease-in-out;
-    }
-    .hero-slide.active { opacity: 1; }
-    .hero-slide::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(
-        135deg,
-        rgba(0,0,0,0.75) 0%,
-        rgba(0,0,0,0.4) 50%,
-        rgba(0,0,0,0.65) 100%
-      );
-    }
-
-    .hero-slide-1 { background-image: url('images/preview.webp'); }
-    .hero-slide-2 { background-image: url('images/preview__6_.webp'); }
-    .hero-slide-3 { background-image: url('images/preview__10_.webp'); }
-    .hero-slide-4 { background-image: url('images/preview__12_.webp'); }
-
-    .hero-content {
-      position: relative; z-index: 2; text-align: center;
-      max-width: 900px; padding: 0 40px;
-      animation: fadeUp 1.2s ease both; animation-delay: 0.3s;
-    }
-
-    .hero-ornament {
-      display: flex; align-items: center; justify-content: center;
-      gap: 20px; margin-bottom: 32px;
-    }
-    .hero-ornament-line {
-      width: 80px; height: 1px; background: var(--gold); opacity: 0.6;
-    }
-    .hero-ornament-diamond {
-      width: 8px; height: 8px;
-      background: var(--gold); transform: rotate(45deg);
-    }
-
-    .hero-eyebrow {
-      font-size: 11px; letter-spacing: 5px; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 24px; font-weight: 400;
-    }
-
-    .hero-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(52px, 8vw, 96px);
-      font-weight: 300; line-height: 1.05;
-      color: var(--cream); margin-bottom: 28px;
-      letter-spacing: 2px;
-    }
-    .hero-title em { font-style: italic; color: var(--gold); }
-
-    .hero-subtitle {
-      font-size: 15px; line-height: 1.8; font-weight: 300;
-      color: var(--cream-dim); max-width: 520px; margin: 0 auto 48px;
-    }
-
-    .hero-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 10px;
-      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--black); background: var(--gold);
-      padding: 16px 40px; text-decoration: none; font-weight: 600;
-      transition: all 0.3s; border: 1px solid var(--gold);
-    }
-    .btn-primary:hover { background: transparent; color: var(--gold); }
-
-    .btn-outline {
-      display: inline-flex; align-items: center; gap: 10px;
-      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--cream); background: transparent;
-      padding: 16px 40px; text-decoration: none; font-weight: 400;
-      border: 1px solid rgba(245,240,232,0.3);
-      transition: all 0.3s;
-    }
-    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
-
-    .hero-scroll-hint {
-      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
-      z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
-      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
-      color: rgba(245,240,232,0.4); animation: bounce 2s infinite;
-    }
-    .hero-scroll-hint::after {
-      content: ''; width: 1px; height: 50px;
-      background: linear-gradient(to bottom, var(--gold), transparent);
-    }
-
-    /* ─── SECTION BASE ─── */
-    section { padding: 120px 60px; }
-
-    .section-tag {
-      display: inline-flex; align-items: center; gap: 12px;
-      font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 20px;
-    }
-    .section-tag::before {
-      content: ''; width: 30px; height: 1px; background: var(--gold);
-    }
-
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(36px, 5vw, 60px);
-      font-weight: 300; line-height: 1.15; color: var(--cream);
-      margin-bottom: 24px;
-    }
-    .section-title em { font-style: italic; color: var(--gold); }
-
-    .section-body {
-      font-size: 15px; line-height: 1.9; font-weight: 300;
-      color: var(--cream-dim); max-width: 600px;
-    }
-
-    /* ─── ABOUT ─── */
-    .about {
-      background: var(--dark);
-      display: grid; grid-template-columns: 1fr 1fr; gap: 100px;
-      align-items: center;
-    }
-
-    .about-image-wrap {
-      position: relative; aspect-ratio: 3/4; overflow: hidden;
-    }
-    .about-image-wrap img {
-      width: 100%; height: 100%; object-fit: cover;
-      filter: grayscale(20%);
-      transition: transform 0.8s ease, filter 0.5s;
-    }
-    .about-image-wrap:hover img { transform: scale(1.04); filter: grayscale(0%); }
-
-    .about-image-accent {
-      position: absolute; bottom: -20px; right: -20px;
-      width: 60%; height: 60%;
-      border: 1px solid rgba(201,168,76,0.3);
-      pointer-events: none; z-index: -1;
-    }
-
-    .about-quote {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px; font-style: italic; font-weight: 300;
-      color: var(--gold); line-height: 1.6;
-      border-left: 2px solid var(--gold);
-      padding-left: 28px; margin-top: 48px;
-    }
-
-    /* ─── STATS ─── */
-    .stats {
-      background: var(--black);
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 1px; padding: 0;
-    }
-    .stat-item {
-      padding: 80px 60px; text-align: center;
-      border: 1px solid rgba(201,168,76,0.1);
-      transition: background 0.3s;
-    }
-    .stat-item:hover { background: var(--dark2); }
-    .stat-number {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 72px; font-weight: 300; color: var(--gold);
-      line-height: 1; margin-bottom: 16px;
-    }
-    .stat-label {
-      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--cream-dim);
-    }
-
-    /* ─── HOW IT WORKS ─── */
-    .how { background: var(--dark); }
-    .how-header { margin-bottom: 80px; }
-
-    .steps {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 40px; position: relative;
-    }
-    .steps::before {
-      content: '';
-      position: absolute; top: 32px; left: calc(12.5% + 20px); right: calc(12.5% + 20px);
-      height: 1px; background: linear-gradient(to right, transparent, var(--gold-dark), transparent);
-    }
-
-    .step { text-align: center; }
-    .step-num {
-      width: 64px; height: 64px; border-radius: 50%;
-      border: 1px solid var(--gold);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 32px;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 24px; font-weight: 300; color: var(--gold);
-      background: var(--dark);
-      transition: background 0.3s, transform 0.3s;
-    }
-    .step:hover .step-num { background: var(--gold); color: var(--black); transform: scale(1.1); }
-    .step-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px; font-weight: 400; color: var(--cream);
-      margin-bottom: 16px;
-    }
-    .step-desc {
-      font-size: 13px; line-height: 1.8; color: var(--cream-dim); font-weight: 300;
-    }
-
-    /* ─── GALLERY ─── */
-    .gallery {
-      padding: 0; display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: 300px 300px;
-    }
-    .gallery-item {
-      overflow: hidden; position: relative; cursor: pointer;
-    }
-    .gallery-item img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform 0.8s ease, filter 0.5s;
-      filter: grayscale(30%) brightness(0.85);
-    }
-    .gallery-item:hover img { transform: scale(1.08); filter: grayscale(0%) brightness(1); }
-    .gallery-item:nth-child(1) { grid-column: 1; grid-row: 1 / 3; }
-    .gallery-item:nth-child(2) { grid-column: 2; grid-row: 1; }
-    .gallery-item:nth-child(3) { grid-column: 3; grid-row: 1; }
-    .gallery-item:nth-child(4) { grid-column: 4; grid-row: 1 / 3; }
-    .gallery-item:nth-child(5) { grid-column: 2; grid-row: 2; }
-    .gallery-item:nth-child(6) { grid-column: 3; grid-row: 2; }
-
-    /* ─── TARIFFS ─── */
-    .tariffs { background: var(--black); }
-    .tariffs-header { margin-bottom: 80px; }
-
-    .tariff-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 2px; background: rgba(201,168,76,0.1);
-    }
-
-    .tariff-card {
-      background: var(--dark); padding: 60px 48px;
-      position: relative; overflow: hidden;
-      transition: background 0.4s;
-    }
-    .tariff-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0;
-      height: 2px; background: var(--gold); opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .tariff-card:hover { background: #161616; }
-    .tariff-card:hover::before { opacity: 1; }
-
-    .tariff-card.featured {
-      background: var(--dark2);
-    }
-    .tariff-card.featured::before { opacity: 1; }
-
-    .tariff-badge {
-      display: inline-block;
-      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--black); background: var(--gold);
-      padding: 4px 12px; margin-bottom: 32px;
-    }
-
-    .tariff-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 32px; font-weight: 300; color: var(--cream);
-      margin-bottom: 8px;
-    }
-    .tariff-price {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 20px; color: var(--gold);
-      margin-bottom: 40px;
-    }
-
-    .tariff-features { list-style: none; margin-bottom: 48px; }
-    .tariff-features li {
-      font-size: 13px; line-height: 1; padding: 14px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      color: var(--cream-dim); font-weight: 300;
-      display: flex; align-items: center; gap: 12px;
-    }
-    .tariff-features li::before {
-      content: '◆'; font-size: 6px; color: var(--gold); flex-shrink: 0;
-    }
-
-    .tariff-btn {
-      display: block; width: 100%; padding: 14px 0;
-      text-align: center; text-decoration: none;
-      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
-      font-weight: 600; transition: all 0.3s;
-      border: 1px solid var(--gold);
-      color: var(--gold);
-    }
-    .tariff-btn:hover, .tariff-card.featured .tariff-btn {
-      background: var(--gold); color: var(--black);
-    }
-    .tariff-card.featured .tariff-btn:hover {
-      background: var(--gold-light);
-    }
-
-    /* ─── PRIVACY ─── */
-    .privacy {
-      background: var(--dark);
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 100px; align-items: center;
-    }
-
-    .privacy-image { position: relative; aspect-ratio: 4/5; overflow: hidden; }
-    .privacy-image img { width: 100%; height: 100%; object-fit: cover; }
-    .privacy-image-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(201,168,76,0.15) 0%, transparent 60%);
-    }
-
-    .privacy-points { margin-top: 48px; }
-    .privacy-point {
-      display: flex; gap: 24px; align-items: flex-start;
-      padding: 24px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-    .privacy-point-icon {
-      width: 40px; height: 40px; flex-shrink: 0;
-      border: 1px solid var(--gold-dark);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px;
-    }
-    .privacy-point-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 18px; font-weight: 400; color: var(--cream);
-      margin-bottom: 6px;
-    }
-    .privacy-point-desc {
-      font-size: 13px; color: var(--cream-dim); font-weight: 300; line-height: 1.7;
-    }
-
-    /* ─── CTA ─── */
-    .cta-section {
-      position: relative; padding: 160px 60px;
-      text-align: center; overflow: hidden;
-    }
-    .cta-bg {
-      position: absolute; inset: 0;
-      background-image: url('images/preview__13_.webp');
-      background-size: cover; background-position: center;
-    }
-    .cta-bg::after {
-      content: ''; position: absolute; inset: 0;
-      background: rgba(0,0,0,0.82);
-    }
-    .cta-content { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
-    .cta-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(40px, 6vw, 72px);
-      font-weight: 300; color: var(--cream);
-      line-height: 1.15; margin-bottom: 24px;
-    }
-    .cta-title em { font-style: italic; color: var(--gold); }
-    .cta-sub {
-      font-size: 14px; color: var(--cream-dim); font-weight: 300;
-      line-height: 1.8; margin-bottom: 56px;
-    }
-
-    /* ─── FOOTER ─── */
-    footer {
-      background: #050505; padding: 60px;
-      display: flex; justify-content: space-between; align-items: center;
-      border-top: 1px solid rgba(201,168,76,0.1);
-    }
-    .footer-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 24px; font-weight: 300; letter-spacing: 6px; color: var(--gold);
-    }
-    .footer-text {
-      font-size: 12px; color: rgba(245,240,232,0.3); font-weight: 300;
-      letter-spacing: 1px;
-    }
-    .footer-links { display: flex; gap: 28px; }
-    .footer-links a {
-      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-      color: rgba(245,240,232,0.3); text-decoration: none;
-      transition: color 0.3s;
-    }
-    .footer-links a:hover { color: var(--gold); }
-
-    /* ─── ORNAMENT DIVIDER ─── */
-    .ornament-divider {
-      display: flex; align-items: center; justify-content: center;
-      gap: 16px; padding: 20px 0;
-    }
-    .ornament-divider-line { flex: 1; height: 1px; background: rgba(201,168,76,0.15); }
-    .ornament-divider-symbol {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 18px; color: var(--gold-dark); opacity: 0.7;
-    }
-
-    /* ─── ANIMATIONS ─── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50%       { transform: translateX(-50%) translateY(-8px); }
-    }
-
-    .reveal {
-      opacity: 0; transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 1024px) {
-      nav { padding: 20px 32px; }
-      .nav-links { display: none; }
-      section { padding: 80px 32px; }
-      .about, .privacy { grid-template-columns: 1fr; gap: 48px; }
-      .stats { grid-template-columns: 1fr 1fr; }
-      .steps { grid-template-columns: 1fr 1fr; }
-      .steps::before { display: none; }
-      .tariff-grid { grid-template-columns: 1fr; }
-      .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
-      .gallery-item:nth-child(1),
-      .gallery-item:nth-child(4) { grid-column: auto; grid-row: auto; }
-      footer { flex-direction: column; gap: 24px; text-align: center; }
-    }
-
-    @media (max-width: 600px) {
-      nav { padding: 16px 20px; }
-      .logo { font-size: 22px; letter-spacing: 5px; }
-      section { padding: 60px 20px; }
-      .stats { grid-template-columns: 1fr; }
-      .steps { grid-template-columns: 1fr; }
-      .gallery { grid-template-columns: 1fr 1fr; }
-      .hero-title { font-size: 42px; }
-      .cta-section { padding: 100px 20px; }
-    }
+    :root{--gold:#C9A84C;--gold-light:#E8D08A;--gold-dark:#8B6914;--black:#080808;--dark:#101010;--dark2:#181818;--cream:#F5F0E8;--cream-dim:rgba(245,240,232,0.65);--cream-faint:rgba(245,240,232,0.3);}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Raleway',sans-serif;background:var(--black);color:var(--cream);overflow-x:hidden;}
+    ::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-thumb{background:var(--gold-dark);}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:24px 60px;background:linear-gradient(to bottom,rgba(8,8,8,0.95),transparent);transition:all .4s;}
+    nav.scrolled{background:rgba(8,8,8,0.98);padding:16px 60px;border-bottom:1px solid rgba(201,168,76,0.1);}
+    .logo{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;letter-spacing:8px;color:var(--gold);text-decoration:none;}
+    .logo span{color:var(--cream);}
+    .nav-links{display:flex;gap:32px;list-style:none;}
+    .nav-links a{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--cream-dim);text-decoration:none;transition:color .3s;}
+    .nav-links a:hover{color:var(--gold);}
+    .nav-cta{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--black);background:var(--gold);padding:10px 24px;text-decoration:none;font-weight:600;transition:all .3s;}
+    .nav-cta:hover{background:var(--gold-light);}
+    .hero{position:relative;height:100vh;min-height:700px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+    .hero-bg{position:absolute;inset:0;}
+    .hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 2s ease-in-out;}
+    .hero-slide.active{opacity:1;}
+    .hero-slide::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(8,8,8,0.85) 0%,rgba(8,8,8,0.5) 50%,rgba(8,8,8,0.75) 100%);}
+    .hs1{background-image:url('images/preview.webp');}
+    .hs2{background-image:url('images/preview__6_.webp');}
+    .hs3{background-image:url('images/preview__12_.webp');}
+    .hero-content{position:relative;z-index:2;text-align:center;max-width:860px;padding:0 40px;animation:fadeUp 1.2s ease both;}
+    .hero-badge{display:inline-flex;align-items:center;gap:10px;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:28px;border:1px solid rgba(201,168,76,0.3);padding:8px 20px;}
+    .hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,7vw,88px);font-weight:300;line-height:1.08;color:var(--cream);margin-bottom:28px;letter-spacing:1px;}
+    .hero-title em{font-style:italic;color:var(--gold);}
+    .hero-subtitle{font-size:14px;line-height:1.9;font-weight:300;color:var(--cream-dim);max-width:560px;margin:0 auto 32px;}
+    .hero-note{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--cream-faint);margin-bottom:40px;}
+    .btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+    .btn-gold{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--black);background:var(--gold);padding:15px 36px;text-decoration:none;font-weight:600;border:1px solid var(--gold);transition:all .3s;}
+    .btn-gold:hover{background:transparent;color:var(--gold);}
+    .btn-out{display:inline-flex;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--cream);background:transparent;padding:15px 36px;text-decoration:none;border:1px solid rgba(245,240,232,0.25);transition:all .3s;}
+    .btn-out:hover{border-color:var(--gold);color:var(--gold);}
+    .divider{display:flex;align-items:center;gap:16px;padding:12px 60px;}
+    .divider-line{flex:1;height:1px;background:rgba(201,168,76,0.1);}
+    .divider-sym{font-family:'Cormorant Garamond',serif;font-size:16px;color:rgba(201,168,76,0.35);letter-spacing:8px;}
+    section{padding:110px 60px;}
+    .tag{display:inline-flex;align-items:center;gap:10px;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+    .tag::before{content:'';width:24px;height:1px;background:var(--gold);}
+    .sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,4.5vw,56px);font-weight:300;color:var(--cream);line-height:1.15;margin-bottom:20px;}
+    .sec-title em{font-style:italic;color:var(--gold);}
+    .sec-body{font-size:14px;line-height:1.9;color:var(--cream-dim);font-weight:300;max-width:580px;}
+    .not-dating{background:var(--dark);text-align:center;padding:80px 60px;border-top:1px solid rgba(201,168,76,0.08);border-bottom:1px solid rgba(201,168,76,0.08);}
+    .not-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,52px);font-weight:300;color:var(--cream);margin-bottom:16px;}
+    .not-title em{font-style:italic;color:var(--gold);}
+    .not-sub{font-size:14px;color:var(--cream-dim);max-width:600px;margin:0 auto 56px;line-height:1.8;}
+    .not-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(201,168,76,0.06);}
+    .not-item{background:var(--dark);padding:48px 36px;text-align:left;transition:background .3s;}
+    .not-item:hover{background:var(--dark2);}
+    .not-vs{font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+    .bad{color:rgba(200,80,80,0.7);}
+    .good{color:var(--gold);}
+    .arr{color:var(--cream-faint);}
+    .not-item-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--cream);margin-bottom:12px;}
+    .not-item-body{font-size:13px;line-height:1.8;color:var(--cream-dim);font-weight:300;}
+    .pains{background:var(--black);}
+    .pains-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:60px;background:rgba(201,168,76,0.06);}
+    .pain{background:var(--dark);padding:48px 44px;position:relative;overflow:hidden;transition:background .3s;}
+    .pain:hover{background:#141414;}
+    .pain::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--gold);opacity:0;transition:opacity .3s;}
+    .pain:hover::before{opacity:1;}
+    .pain-num{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;color:rgba(201,168,76,0.1);line-height:1;margin-bottom:20px;}
+    .pain-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(200,80,80,0.6);margin-bottom:12px;}
+    .pain-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--cream);margin-bottom:14px;}
+    .pain-body{font-size:13px;line-height:1.8;color:var(--cream-dim);font-weight:300;margin-bottom:22px;}
+    .pain-sol{font-size:12px;line-height:1.7;color:var(--gold);padding-left:16px;border-left:2px solid var(--gold);}
+    .steps-sec{background:var(--dark);}
+    .steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:60px;background:rgba(201,168,76,0.06);}
+    .step{background:var(--dark);padding:40px 28px;transition:background .3s;}
+    .step:hover{background:var(--dark2);}
+    .step-num{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:rgba(201,168,76,0.12);line-height:1;margin-bottom:18px;}
+    .step-tag{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+    .step-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--cream);margin-bottom:10px;}
+    .step-body{font-size:12px;line-height:1.8;color:var(--cream-dim);font-weight:300;}
+    .gallery{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:280px 280px;padding:0;}
+    .gi{overflow:hidden;}
+    .gi img{width:100%;height:100%;object-fit:cover;filter:grayscale(30%) brightness(0.8);transition:all .8s;}
+    .gi:hover img{filter:grayscale(0%) brightness(1);transform:scale(1.05);}
+    .gi:nth-child(1){grid-column:1;grid-row:1/3;}
+    .gi:nth-child(4){grid-column:4;grid-row:1/3;}
+    .tariffs-sec{background:var(--black);}
+    .tariff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:60px;background:rgba(201,168,76,0.06);}
+    .tariff{background:var(--dark);padding:52px 40px;transition:background .3s;}
+    .tariff:hover{background:#141414;}
+    .tariff.feat{background:var(--dark2);border-top:2px solid var(--gold);}
+    .t-badge{font-size:9px;letter-spacing:2px;text-transform:uppercase;background:var(--gold);color:var(--black);padding:4px 12px;display:inline-block;margin-bottom:28px;font-weight:700;}
+    .t-name{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;color:var(--cream);margin-bottom:8px;}
+    .t-price{font-size:13px;color:var(--gold);margin-bottom:36px;font-family:'Cormorant Garamond',serif;font-style:italic;}
+    .t-list{list-style:none;margin-bottom:40px;}
+    .t-list li{font-size:12px;color:var(--cream-dim);padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;gap:10px;align-items:flex-start;line-height:1.6;}
+    .t-list li::before{content:'◆';font-size:5px;color:var(--gold);flex-shrink:0;margin-top:5px;}
+    .t-btn{display:block;width:100%;padding:13px 0;text-align:center;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:600;border:1px solid var(--gold);color:var(--gold);background:transparent;cursor:pointer;text-decoration:none;transition:all .3s;}
+    .t-btn:hover,.tariff.feat .t-btn{background:var(--gold);color:var(--black);}
+    .kyc-sec{background:var(--dark);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+    .kyc-img{position:relative;aspect-ratio:3/4;overflow:hidden;}
+    .kyc-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(20%);}
+    .kyc-img::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,0.1) 0%,transparent 60%);}
+    .kyc-pts{margin-top:40px;}
+    .kyc-pt{display:flex;gap:20px;padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+    .kyc-ic{width:36px;height:36px;border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+    .kyc-pt-title{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--cream);margin-bottom:4px;}
+    .kyc-pt-body{font-size:12px;color:var(--cream-dim);line-height:1.7;}
+    .suyunchi{background:var(--black);text-align:center;padding:100px 60px;border-top:1px solid rgba(201,168,76,0.08);}
+    .suy-title{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,5vw,60px);font-weight:300;color:var(--cream);line-height:1.15;margin-bottom:24px;}
+    .suy-title em{font-style:italic;color:var(--gold);}
+    .suy-body{font-size:14px;color:var(--cream-dim);line-height:1.9;max-width:600px;margin:0 auto 48px;}
+    .cta-sec{position:relative;padding:160px 60px;text-align:center;overflow:hidden;}
+    .cta-bg{position:absolute;inset:0;background-image:url('images/preview__13_.webp');background-size:cover;background-position:center;}
+    .cta-bg::after{content:'';position:absolute;inset:0;background:rgba(8,8,8,0.84);}
+    .cta-content{position:relative;z-index:2;max-width:720px;margin:0 auto;}
+    .cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5.5vw,68px);font-weight:300;color:var(--cream);line-height:1.15;margin-bottom:24px;}
+    .cta-title em{font-style:italic;color:var(--gold);}
+    .cta-body{font-size:14px;color:var(--cream-dim);line-height:1.9;margin-bottom:48px;}
+    .cta-note{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--cream-faint);margin-top:24px;}
+    footer{background:#050505;padding:48px 60px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(201,168,76,0.08);flex-wrap:wrap;gap:20px;}
+    .f-logo{font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:5px;color:var(--gold);font-weight:300;}
+    .f-text{font-size:11px;color:rgba(245,240,232,0.25);}
+    .f-links{display:flex;gap:24px;}
+    .f-links a{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(245,240,232,0.3);text-decoration:none;transition:color .3s;}
+    .f-links a:hover{color:var(--gold);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:translateY(0)}}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease;}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+    @media(max-width:1024px){nav{padding:18px 28px;}.nav-links{display:none;}section{padding:80px 28px;}.not-dating{padding:60px 28px;}.not-grid,.pains-grid,.tariff-grid{grid-template-columns:1fr;}.steps-grid{grid-template-columns:1fr 1fr;}.kyc-sec{grid-template-columns:1fr;gap:40px;}.gallery{grid-template-columns:1fr 1fr;grid-template-rows:auto;}.gi:nth-child(1),.gi:nth-child(4){grid-column:auto;grid-row:auto;}footer{flex-direction:column;text-align:center;padding:36px 28px;}.cta-sec{padding:100px 28px;}.divider{padding:8px 28px;}}
+    @media(max-width:600px){nav{padding:14px 16px;}section{padding:60px 16px;}.steps-grid{grid-template-columns:1fr;}.hero-title{font-size:40px;}.suyunchi{padding:70px 16px;}}
   </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav id="navbar">
+<nav id="nav">
   <a class="logo" href="#">QADAR<span>.UZ</span></a>
   <ul class="nav-links">
     <li><a href="#about">О нас</a></li>
-    <li><a href="#how">Как работает</a></li>
-    <li><a href="#tariffs">Тарифы</a></li>
-    <li><a href="#privacy">Конфиденциальность</a></li>
+    <li><a href="#pains">Наш подход</a></li>
+    <li><a href="#steps">Как работаем</a></li>
+    <li><a href="#tariffs">Членство</a></li>
   </ul>
-  <a href="https://t.me/qadar_uz_bot" class="nav-cta" target="_blank">Подать заявку</a>
+  <a href="https://t.me/qadaruz_bot" class="nav-cta" target="_blank">Подать заявку</a>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
-  <div class="hero-slider">
-    <div class="hero-slide hero-slide-1 active"></div>
-    <div class="hero-slide hero-slide-2"></div>
-    <div class="hero-slide hero-slide-3"></div>
-    <div class="hero-slide hero-slide-4"></div>
+  <div class="hero-bg">
+    <div class="hero-slide hs1 active"></div>
+    <div class="hero-slide hs2"></div>
+    <div class="hero-slide hs3"></div>
   </div>
-
   <div class="hero-content">
-    <div class="hero-ornament">
-      <div class="hero-ornament-line"></div>
-      <div class="hero-ornament-diamond"></div>
-      <div class="hero-ornament-line"></div>
+    <div class="hero-badge">Закрытый клуб · Ташкент · Узбекистан</div>
+    <h1 class="hero-title">Мы — не сваха.<br>Мы — <em>гарант судьбы</em></h1>
+    <p class="hero-subtitle">Закрытый клуб для интеллигентных семей Узбекистана.<br>Верификация. Конфиденциальность. Достоинство.</p>
+    <p class="hero-note">Принимаем только по заявке · Каждый кандидат проверен лично</p>
+    <div class="btns">
+      <a href="https://t.me/qadaruz_bot" class="btn-gold" target="_blank">Подать заявку</a>
+      <a href="#about" class="btn-out">Узнать больше</a>
     </div>
-    <p class="hero-eyebrow">Закрытый матримониальный клуб · Ташкент</p>
-    <h1 class="hero-title">
-      Достойный союз —<br><em>начинается здесь</em>
-    </h1>
-    <p class="hero-subtitle">
-      Мы не сваха и не сайт знакомств.<br>
-      Мы — доверенный посредник для семей, которые ищут достойного партнёра для своих детей.
-    </p>
-    <div class="hero-buttons">
-      <a href="https://t.me/qadar_uz_bot" class="btn-primary" target="_blank">
-        Подать заявку
-      </a>
-      <a href="#how" class="btn-outline">Узнать больше</a>
-    </div>
-  </div>
-
-  <div class="hero-scroll-hint">Листать</div>
-</section>
-
-<!-- ORNAMENT -->
-<div class="ornament-divider">
-  <div class="ornament-divider-line"></div>
-  <div class="ornament-divider-symbol">✦ ◆ ✦</div>
-  <div class="ornament-divider-line"></div>
-</div>
-
-<!-- ABOUT -->
-<section class="about" id="about">
-  <div class="about-image-wrap reveal">
-    <img src="images/preview__10_.webp" alt="QADAR — элегантность"/>
-    <div class="about-image-accent"></div>
-  </div>
-  <div class="about-text reveal">
-    <p class="section-tag">Наша миссия</p>
-    <h2 class="section-title">Мост между<br><em>достойными семьями</em></h2>
-    <p class="section-body">
-      В Узбекистане тысячи прекрасных молодых людей ждут своего времени.
-      Не потому что их нет — а потому что правильные пути ещё не пересеклись.
-      Агентства продают номера. Свахи работают на слух. Мы работаем иначе.
-    </p>
-    <p class="section-body" style="margin-top:20px;">
-      QADAR — это личный поиск. Мы изучаем вашу семью, ваши ценности
-      и предлагаем только тех, кто действительно подходит. 1–3 кандидата.
-      Не 10. Не список. Только те, кому можно доверять.
-    </p>
-    <blockquote class="about-quote">
-      «Я сама прошла через эту боль как мать двух дочерей.
-      QADAR — это то, чего мне не хватало.»
-      <br><small style="font-size:13px; color: var(--cream-dim); margin-top:8px; display:block;">— Основатель QADAR</small>
-    </blockquote>
   </div>
 </section>
 
-<!-- STATS -->
-<div class="stats">
-  <div class="stat-item reveal">
-    <div class="stat-number">100%</div>
-    <div class="stat-label">Верификация каждого участника</div>
-  </div>
-  <div class="stat-item reveal" style="transition-delay:0.15s">
-    <div class="stat-number">1–3</div>
-    <div class="stat-label">Кандидата — не список из 10</div>
-  </div>
-  <div class="stat-item reveal" style="transition-delay:0.3s">
-    <div class="stat-number">0</div>
-    <div class="stat-label">Публичных данных без согласия</div>
+<div class="divider"><div class="divider-line"></div><div class="divider-sym">✦ ◆ ✦</div><div class="divider-line"></div></div>
+
+<div class="not-dating" id="about">
+  <p class="tag" style="justify-content:center">Наша позиция</p>
+  <h2 class="not-title">Это не сайт знакомств.<br>Это <em>институт доверия</em> для семей.</h2>
+  <p class="not-sub">Мы — мост между интеллигентными семьями. Мы продаём не номера телефонов, а безопасность, статус и экономию нервов и времени.</p>
+  <div class="not-grid">
+    <div class="not-item reveal">
+      <div class="not-vs"><span class="bad">Обычные агентства</span><span class="arr">→</span><span class="good">QADAR</span></div>
+      <div class="not-item-title">Не список номеров</div>
+      <div class="not-item-body">Агентства продают 10 номеров телефонов. Мы предлагаем 1–2 проверенных досье в месяц. Качество вместо количества.</div>
+    </div>
+    <div class="not-item reveal" style="transition-delay:.1s">
+      <div class="not-vs"><span class="bad">Слепые смотрины дома</span><span class="arr">→</span><span class="good">QADAR</span></div>
+      <div class="not-item-title">Нейтральная территория</div>
+      <div class="not-item-body">Первая встреча — только в тихом статусном ресторане. Чаепитие 40–60 минут. Домой приглашают только прошедших отбор.</div>
+    </div>
+    <div class="not-item reveal" style="transition-delay:.2s">
+      <div class="not-vs"><span class="bad">Субъективные свахи</span><span class="arr">→</span><span class="good">QADAR</span></div>
+      <div class="not-item-title">Системная верификация</div>
+      <div class="not-item-body">Каждый кандидат проходит KYC: дипломы, справки из диспансеров, личное видеоинтервью. В базу попадают только проверенные.</div>
+    </div>
   </div>
 </div>
 
-<!-- HOW IT WORKS -->
-<section class="how" id="how">
-  <div class="how-header reveal">
-    <p class="section-tag">Процесс</p>
-    <h2 class="section-title">Как это <em>работает</em></h2>
-  </div>
+<div class="divider"><div class="divider-line"></div><div class="divider-sym">✦ ◆ ✦</div><div class="divider-line"></div></div>
 
-  <div class="steps">
-    <div class="step reveal">
-      <div class="step-num">01</div>
-      <h3 class="step-title">Заявка семьи</h3>
-      <p class="step-desc">Через Telegram-бот подаётся анкета от имени семьи. Не от молодого человека — от родителей или представителя.</p>
+<section class="pains" id="pains">
+  <div class="reveal">
+    <p class="tag">Боли которые мы решаем</p>
+    <h2 class="sec-title">Мы понимаем,<br><em>через что вы проходите</em></h2>
+  </div>
+  <div class="pains-grid">
+    <div class="pain reveal">
+      <div class="pain-num">01</div>
+      <div class="pain-label">Боль семьи</div>
+      <div class="pain-title">Дастархан вслепую</div>
+      <div class="pain-body">$100–200 и целый день на накрытие стола для "смотрин", которые заканчиваются разочарованием. Дом открыт чужим людям без гарантий.</div>
+      <div class="pain-sol">Первая встреча только на нейтральной территории. Ваш дом открывается только тем, кто прошёл отбор.</div>
     </div>
-    <div class="step reveal" style="transition-delay:0.1s">
-      <div class="step-num">02</div>
-      <h3 class="step-title">Верификация</h3>
-      <p class="step-desc">Мы проверяем данные, образование и соответствие уровню. Фото закрыты — полное инкогнито до взаимного интереса.</p>
+    <div class="pain reveal" style="transition-delay:.1s">
+      <div class="pain-num">02</div>
+      <div class="pain-label">Боль семьи</div>
+      <div class="pain-title">Неловкость и финансовые сюрпризы</div>
+      <div class="pain-body">Кто платит за ресторан? Куда идти? Как не попасть в неловкую ситуацию при первой встрече двух семей?</div>
+      <div class="pain-sol">Консьерж заранее предлагает семье жениха 3 варианта заведений под их бюджет. Никаких сюрпризов за столом.</div>
     </div>
-    <div class="step reveal" style="transition-delay:0.2s">
-      <div class="step-num">03</div>
-      <h3 class="step-title">Подбор</h3>
-      <p class="step-desc">Наш консьерж лично подбирает 1–3 кандидата. Богатые видят только богатых — уровни не смешиваются.</p>
+    <div class="pain reveal">
+      <div class="pain-num">03</div>
+      <div class="pain-label">Боль семьи</div>
+      <div class="pain-title">Ложь в анкетах и фейки</div>
+      <div class="pain-body">Скрытые болезни, зависимости, ложные данные. Узнаёшь правду только после нескольких встреч и потраченного времени.</div>
+      <div class="pain-sol">100% KYC — дипломы, справки из диспансеров, личное видеоинтервью куратора до включения в базу.</div>
     </div>
-    <div class="step reveal" style="transition-delay:0.3s">
-      <div class="step-num">04</div>
-      <h3 class="step-title">Встреча семей</h3>
-      <p class="step-desc">Мы организуем первое знакомство семей в нейтральном месте. Всё конфиденциально, комфортно, по традиции.</p>
+    <div class="pain reveal" style="transition-delay:.1s">
+      <div class="pain-num">04</div>
+      <div class="pain-label">Боль семьи</div>
+      <div class="pain-title">Комплекс статуса</div>
+      <div class="pain-body">Успешные девушки боятся отпугнуть женихов своими достижениями. Парни чувствуют давление "соответствовать".</div>
+      <div class="pain-sol">Психологический префрейминг. Мы презентуем кандидатов так, чтобы снять ярлыки до встречи.</div>
     </div>
   </div>
 </section>
 
-<!-- GALLERY -->
 <div class="gallery">
-  <div class="gallery-item">
-    <img src="images/preview__15_.webp" alt=""/>
-  </div>
-  <div class="gallery-item">
-    <img src="images/preview__8_.webp" alt=""/>
-  </div>
-  <div class="gallery-item">
-    <img src="images/preview__14_.webp" alt=""/>
-  </div>
-  <div class="gallery-item">
-    <img src="images/preview__3_.webp" alt=""/>
-  </div>
-  <div class="gallery-item">
-    <img src="images/preview__11_.webp" alt=""/>
-  </div>
-  <div class="gallery-item">
-    <img src="images/preview__2_.webp" alt=""/>
-  </div>
+  <div class="gi"><img src="images/preview__15_.webp" alt=""/></div>
+  <div class="gi"><img src="images/preview__8_.webp" alt=""/></div>
+  <div class="gi"><img src="images/preview__14_.webp" alt=""/></div>
+  <div class="gi"><img src="images/preview__3_.webp" alt=""/></div>
+  <div class="gi"><img src="images/preview__11_.webp" alt=""/></div>
+  <div class="gi"><img src="images/preview__2_.webp" alt=""/></div>
 </div>
 
-<!-- TARIFFS -->
-<section class="tariffs" id="tariffs">
-  <div class="tariffs-header reveal">
-    <p class="section-tag">Членство</p>
-    <h2 class="section-title">Выберите свой <em>уровень</em></h2>
+<section class="steps-sec" id="steps">
+  <div class="reveal">
+    <p class="tag">Процесс</p>
+    <h2 class="sec-title">8 шагов к<br><em>достойному союзу</em></h2>
   </div>
+  <div class="steps-grid">
+    <div class="step reveal"><div class="step-num">01</div><div class="step-tag">Бесплатно</div><div class="step-title">Заявка в Telegram</div><div class="step-body">Семья подаёт заявку через наш бот. Без обязательств.</div></div>
+    <div class="step reveal" style="transition-delay:.08s"><div class="step-num">02</div><div class="step-tag">Входной фильтр</div><div class="step-title">Аудит безопасности</div><div class="step-body">Оплата первичного аудита. Отсев несерьёзных заявок.</div></div>
+    <div class="step reveal" style="transition-delay:.16s"><div class="step-num">03</div><div class="step-tag">KYC</div><div class="step-title">Проверка и интервью</div><div class="step-body">Дипломы, справки, личное видеоинтервью с куратором.</div></div>
+    <div class="step reveal" style="transition-delay:.24s"><div class="step-num">04</div><div class="step-tag">12 месяцев</div><div class="step-title">Вход в закрытую базу</div><div class="step-body">После верификации вы становитесь членом клуба.</div></div>
+    <div class="step reveal"><div class="step-num">05</div><div class="step-tag">1–2 в месяц</div><div class="step-title">Индивидуальный мэтчинг</div><div class="step-body">Досье без контактов. Только при взаимном интересе — следующий шаг.</div></div>
+    <div class="step reveal" style="transition-delay:.08s"><div class="step-num">06</div><div class="step-tag">Консьерж-сервис</div><div class="step-title">Организация встречи</div><div class="step-body">Бронь стола. Куратор первые 10 минут, затем уходит.</div></div>
+    <div class="step reveal" style="transition-delay:.16s"><div class="step-num">07</div><div class="step-tag">На следующий день</div><div class="step-title">Семейная дипломатия</div><div class="step-body">Сбор обратной связи. При согласии обеих сторон — передача контактов.</div></div>
+    <div class="step reveal" style="transition-delay:.24s"><div class="step-num">08</div><div class="step-tag">Суюнчи</div><div class="step-title">Гонорар успеха</div><div class="step-body">Мы получаем Суюнчи только по факту помолвки или свадьбы.</div></div>
+  </div>
+</section>
 
+<section class="tariffs-sec" id="tariffs">
+  <div class="reveal">
+    <p class="tag">Членство</p>
+    <h2 class="sec-title">Выберите свой<br><em>уровень</em></h2>
+  </div>
   <div class="tariff-grid">
-    <!-- Standard -->
-    <div class="tariff-card reveal">
-      <div class="tariff-name">Standard</div>
-      <div class="tariff-price">По запросу</div>
-      <ul class="tariff-features">
-        <li>Анкета семьи</li>
-        <li>До 3 кандидатов в месяц</li>
-        <li>100% верификация</li>
-        <li>Инкогнито по умолчанию</li>
-        <li>Поддержка через Telegram</li>
-      </ul>
-      <a href="https://t.me/qadar_uz_bot" class="tariff-btn" target="_blank">Начать</a>
+    <div class="tariff reveal">
+      <div class="t-name">Standard</div><div class="t-price">$100 · 12 месяцев</div>
+      <ul class="t-list"><li>Верификация KYC</li><li>1–2 досье в месяц</li><li>Членство 12 месяцев</li><li>Инкогнито по умолчанию</li><li>Поддержка куратора</li></ul>
+      <a href="https://t.me/qadaruz_bot" class="t-btn" target="_blank">Подать заявку</a>
     </div>
-
-    <!-- Premium -->
-    <div class="tariff-card featured reveal" style="transition-delay:0.15s">
-      <div class="tariff-badge">Рекомендуем</div>
-      <div class="tariff-name">Premium</div>
-      <div class="tariff-price">По запросу</div>
-      <ul class="tariff-features">
-        <li>Личный менеджер-консьерж</li>
-        <li>До 5 кандидатов в месяц</li>
-        <li>Расширенная верификация</li>
-        <li>Приоритетный подбор</li>
-        <li>Сопровождение переговоров</li>
-        <li>Полная конфиденциальность</li>
-      </ul>
-      <a href="https://t.me/qadar_uz_bot" class="tariff-btn" target="_blank">Начать</a>
+    <div class="tariff feat reveal" style="transition-delay:.12s">
+      <div class="t-badge">Рекомендуем</div>
+      <div class="t-name">Premium</div><div class="t-price">$200 · 12 месяцев</div>
+      <ul class="t-list"><li>Полная верификация + справки</li><li>До 3 досье в месяц</li><li>Личный куратор-консьерж</li><li>Организация первой встречи</li><li>Психологический префрейминг</li><li>Семейная дипломатия</li></ul>
+      <a href="https://t.me/qadaruz_bot" class="t-btn" target="_blank">Подать заявку</a>
     </div>
-
-    <!-- Elite -->
-    <div class="tariff-card reveal" style="transition-delay:0.3s">
-      <div class="tariff-name">Elite</div>
-      <div class="tariff-price">По запросу</div>
-      <ul class="tariff-features">
-        <li>VIP-статус, закрытый круг</li>
-        <li>Неограниченный поиск</li>
-        <li>Организация встречи семей</li>
-        <li>Нотариальная конфиденциальность</li>
-        <li>Личное сопровождение</li>
-        <li>Только один уровень — Elite</li>
-      </ul>
-      <a href="https://t.me/qadar_uz_bot" class="tariff-btn" target="_blank">Начать</a>
+    <div class="tariff reveal" style="transition-delay:.24s">
+      <div class="t-name">Elite</div><div class="t-price">$300 · 12 месяцев</div>
+      <ul class="t-list"><li>VIP-статус, закрытый круг</li><li>Неограниченный поиск</li><li>Куратор на каждой встрече</li><li>Нотариальная конфиденциальность</li><li>Приоритет в базе</li></ul>
+      <a href="https://t.me/qadaruz_bot" class="t-btn" target="_blank">Подать заявку</a>
     </div>
   </div>
 </section>
 
-<!-- PRIVACY -->
-<section class="privacy" id="privacy">
-  <div class="privacy-image reveal">
-    <img src="images/preview__7_.webp" alt="Конфиденциальность"/>
-    <div class="privacy-image-overlay"></div>
-  </div>
-  <div class="privacy-content reveal">
-    <p class="section-tag">Доверие</p>
-    <h2 class="section-title">Ваша приватность —<br><em>наш приоритет</em></h2>
-    <p class="section-body">
-      В Узбекистане репутация семьи — это всё. Мы понимаем это лучше других.
-      Поэтому безопасность данных — не функция, а основа нашей работы.
-    </p>
-
-    <div class="privacy-points">
-      <div class="privacy-point">
-        <div class="privacy-point-icon">🔒</div>
-        <div>
-          <div class="privacy-point-title">Фото закрыты по умолчанию</div>
-          <div class="privacy-point-desc">Никто не видит ваши фотографии без взаимного согласия обеих семей.</div>
-        </div>
-      </div>
-      <div class="privacy-point">
-        <div class="privacy-point-icon">✓</div>
-        <div>
-          <div class="privacy-point-title">Каждый верифицирован</div>
-          <div class="privacy-point-desc">Образование, происхождение, статус — всё проверяется до начала подбора.</div>
-        </div>
-      </div>
-      <div class="privacy-point">
-        <div class="privacy-point-icon">◆</div>
-        <div>
-          <div class="privacy-point-title">Уровни не смешиваются</div>
-          <div class="privacy-point-desc">Standard, Premium и Elite — изолированы. Вы видите только своих.</div>
-        </div>
-      </div>
+<section class="kyc-sec" id="kyc">
+  <div class="kyc-img reveal"><img src="images/preview__7_.webp" alt=""/></div>
+  <div class="reveal">
+    <p class="tag">Верификация</p>
+    <h2 class="sec-title">100% KYC —<br><em>каждый проверен лично</em></h2>
+    <p class="sec-body">В нашу базу не попадают случайные люди. Каждый кандидат проходит многоуровневую проверку.</p>
+    <div class="kyc-pts">
+      <div class="kyc-pt"><div class="kyc-ic">🎓</div><div><div class="kyc-pt-title">Документы об образовании</div><div class="kyc-pt-body">Дипломы, сертификаты, подтверждение места работы.</div></div></div>
+      <div class="kyc-pt"><div class="kyc-ic">🏥</div><div><div class="kyc-pt-title">Справки из диспансеров</div><div class="kyc-pt-body">Нарко-, психо- и медицинские справки. Скрытые болезни исключены.</div></div></div>
+      <div class="kyc-pt"><div class="kyc-ic">🎥</div><div><div class="kyc-pt-title">Личное видеоинтервью</div><div class="kyc-pt-body">Каждый кандидат проходит интервью с куратором клуба.</div></div></div>
+      <div class="kyc-pt"><div class="kyc-ic">🔒</div><div><div class="kyc-pt-title">Полная конфиденциальность</div><div class="kyc-pt-body">Фото и контакты закрыты. Передаются только при взаимном согласии.</div></div></div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta-section">
+<div class="suyunchi reveal">
+  <p class="tag" style="justify-content:center">Наша модель</p>
+  <h2 class="suy-title">Мы получаем <em>Суюнчи</em><br>только по факту свадьбы</h2>
+  <p class="suy-body">Наш финансовый успех напрямую зависит от вашего счастья. Гонорар выплачивается только при помолвке или свадьбе. Это наша гарантия серьёзности.<br><br><span style="color:var(--gold);font-family:Cormorant Garamond,serif;font-size:18px;font-style:italic;">Standard — $1 000 &nbsp;·&nbsp; Premium — $1 500 &nbsp;·&nbsp; Elite — $2 000–$2 500</span></p>
+  <a href="https://t.me/qadaruz_bot" class="btn-gold" target="_blank">Стать членом клуба</a>
+</div>
+
+<section class="cta-sec">
   <div class="cta-bg"></div>
   <div class="cta-content reveal">
-    <p class="section-tag" style="justify-content:center">Первый шаг</p>
-    <h2 class="cta-title">
-      Судьба не случайна —<br><em>она устраивается</em>
-    </h2>
-    <p class="cta-sub">
-      Оставьте заявку через наш Telegram-бот.<br>
-      Мы свяжемся с вами в течение 24 часов.
-    </p>
-    <div class="hero-buttons">
-      <a href="https://t.me/qadar_uz_bot" class="btn-primary" target="_blank">
-        Открыть Telegram-бот
-      </a>
-    </div>
+    <p class="tag" style="justify-content:center">Первый шаг</p>
+    <h2 class="cta-title">Судьба не случайна —<br><em>она устраивается</em></h2>
+    <p class="cta-body">Оставьте заявку через Telegram-бот. Наш куратор свяжется с вами в течение 24 часов для первичной консультации. Без обязательств.</p>
+    <div class="btns"><a href="https://t.me/qadaruz_bot" class="btn-gold" target="_blank">Открыть Telegram-бот</a></div>
+    <p class="cta-note">Конфиденциально · Только для серьёзных семей</p>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <div class="footer-logo">QADAR.UZ</div>
-  <div class="footer-text">© 2025 QADAR · Ташкент, Узбекистан · Все данные защищены</div>
-  <div class="footer-links">
-    <a href="https://t.me/qadar_uz_bot" target="_blank">Telegram</a>
+  <div class="f-logo">QADAR.UZ</div>
+  <div class="f-text">© 2025 QADAR · Ташкент, Узбекистан · Все данные защищены</div>
+  <div class="f-links">
+    <a href="https://t.me/qadaruz_bot" target="_blank">Telegram</a>
     <a href="https://instagram.com/qadar.uz" target="_blank">Instagram</a>
     <a href="mailto:info@qadar.uz">Email</a>
   </div>
 </footer>
 
 <script>
-  // NAV SCROLL
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 80);
-  });
-
-  // HERO SLIDER
-  const slides = document.querySelectorAll('.hero-slide');
-  let current = 0;
-  setInterval(() => {
-    slides[current].classList.remove('active');
-    current = (current + 1) % slides.length;
-    slides[current].classList.add('active');
-  }, 5000);
-
-  // REVEAL ON SCROLL
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); }
-    });
-  }, { threshold: 0.12 });
-  reveals.forEach(r => observer.observe(r));
+  const nav=document.getElementById('nav');
+  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>80));
+  const slides=document.querySelectorAll('.hero-slide');let cur=0;
+  setInterval(()=>{slides[cur].classList.remove('active');cur=(cur+1)%slides.length;slides[cur].classList.add('active');},5500);
+  const obs=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('visible')),{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
 </script>
 </body>
 </html>
