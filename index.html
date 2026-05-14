@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QADAR — Премиальный матримониальный клуб</title>
+  <meta name="description" content="Закрытый клуб подбора партнёров для узбекских семей. Конфиденциально. Достойно. По судьбе."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8D08A;
+      --gold-dark: #8B6914;
+      --black: #0A0A0A;
+      --dark: #111111;
+      --dark2: #1A1A1A;
+      --cream: #F5F0E8;
+      --cream-dim: rgba(245,240,232,0.7);
+      --white: #FFFFFF;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      background: var(--black);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dark); }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 60px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, transparent 100%);
+      transition: background 0.4s;
+    }
+    nav.scrolled { background: rgba(10,10,10,0.97); padding: 16px 60px; }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px; font-weight: 300; letter-spacing: 8px;
+      color: var(--gold); text-decoration: none;
+    }
+    .logo span { color: var(--cream); }
+
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--cream-dim); text-decoration: none; font-weight: 400;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--black); background: var(--gold);
+      padding: 10px 24px; text-decoration: none; font-weight: 600;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative; height: 100vh; min-height: 700px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-slider { position: absolute; inset: 0; }
+    .hero-slide {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      opacity: 0; transition: opacity 1.8s ease-in-out;
+    }
+    .hero-slide.active { opacity: 1; }
+    .hero-slide::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(0,0,0,0.75) 0%,
+        rgba(0,0,0,0.4) 50%,
+        rgba(0,0,0,0.65) 100%
+      );
+    }
+
+    .hero-slide-1 { background-image: url('images/preview.webp'); }
+    .hero-slide-2 { background-image: url('images/preview__6_.webp'); }
+    .hero-slide-3 { background-image: url('images/preview__10_.webp'); }
+    .hero-slide-4 { background-image: url('images/preview__12_.webp'); }
+
+    .hero-content {
+      position: relative; z-index: 2; text-align: center;
+      max-width: 900px; padding: 0 40px;
+      animation: fadeUp 1.2s ease both; animation-delay: 0.3s;
+    }
+
+    .hero-ornament {
+      display: flex; align-items: center; justify-content: center;
+      gap: 20px; margin-bottom: 32px;
+    }
+    .hero-ornament-line {
+      width: 80px; height: 1px; background: var(--gold); opacity: 0.6;
+    }
+    .hero-ornament-diamond {
+      width: 8px; height: 8px;
+      background: var(--gold); transform: rotate(45deg);
+    }
+
+    .hero-eyebrow {
+      font-size: 11px; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 24px; font-weight: 400;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 8vw, 96px);
+      font-weight: 300; line-height: 1.05;
+      color: var(--cream); margin-bottom: 28px;
+      letter-spacing: 2px;
+    }
+    .hero-title em { font-style: italic; color: var(--gold); }
+
+    .hero-subtitle {
+      font-size: 15px; line-height: 1.8; font-weight: 300;
+      color: var(--cream-dim); max-width: 520px; margin: 0 auto 48px;
+    }
+
+    .hero-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--black); background: var(--gold);
+      padding: 16px 40px; text-decoration: none; font-weight: 600;
+      transition: all 0.3s; border: 1px solid var(--gold);
+    }
+    .btn-primary:hover { background: transparent; color: var(--gold); }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--cream); background: transparent;
+      padding: 16px 40px; text-decoration: none; font-weight: 400;
+      border: 1px solid rgba(245,240,232,0.3);
+      transition: all 0.3s;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    .hero-scroll-hint {
+      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(245,240,232,0.4); animation: bounce 2s infinite;
+    }
+    .hero-scroll-hint::after {
+      content: ''; width: 1px; height: 50px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+    }
+
+    /* ─── SECTION BASE ─── */
+    section { padding: 120px 60px; }
+
+    .section-tag {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 20px;
+    }
+    .section-tag::before {
+      content: ''; width: 30px; height: 1px; background: var(--gold);
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 300; line-height: 1.15; color: var(--cream);
+      margin-bottom: 24px;
+    }
+    .section-title em { font-style: italic; color: var(--gold); }
+
+    .section-body {
+      font-size: 15px; line-height: 1.9; font-weight: 300;
+      color: var(--cream-dim); max-width: 600px;
+    }
+
+    /* ─── ABOUT ─── */
+    .about {
+      background: var(--dark);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 100px;
+      align-items: center;
+    }
+
+    .about-image-wrap {
+      position: relative; aspect-ratio: 3/4; overflow: hidden;
+    }
+    .about-image-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: grayscale(20%);
+      transition: transform 0.8s ease, filter 0.5s;
+    }
+    .about-image-wrap:hover img { transform: scale(1.04); filter: grayscale(0%); }
+
+    .about-image-accent {
+      position: absolute; bottom: -20px; right: -20px;
+      width: 60%; height: 60%;
+      border: 1px solid rgba(201,168,76,0.3);
+      pointer-events: none; z-index: -1;
+    }
+
+    .about-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-style: italic; font-weight: 300;
+      color: var(--gold); line-height: 1.6;
+      border-left: 2px solid var(--gold);
+      padding-left: 28px; margin-top: 48px;
+    }
+
+    /* ─── STATS ─── */
+    .stats {
+      background: var(--black);
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; padding: 0;
+    }
+    .stat-item {
+      padding: 80px 60px; text-align: center;
+      border: 1px solid rgba(201,168,76,0.1);
+      transition: background 0.3s;
+    }
+    .stat-item:hover { background: var(--dark2); }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 72px; font-weight: 300; color: var(--gold);
+      line-height: 1; margin-bottom: 16px;
+    }
+    .stat-label {
+      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--cream-dim);
+    }
+
+    /* ─── HOW IT WORKS ─── */
+    .how { background: var(--dark); }
+    .how-header { margin-bottom: 80px; }
+
+    .steps {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 40px; position: relative;
+    }
+    .steps::before {
+      content: '';
+      position: absolute; top: 32px; left: calc(12.5% + 20px); right: calc(12.5% + 20px);
+      height: 1px; background: linear-gradient(to right, transparent, var(--gold-dark), transparent);
+    }
+
+    .step { text-align: center; }
+    .step-num {
+      width: 64px; height: 64px; border-radius: 50%;
+      border: 1px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 32px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px; font-weight: 300; color: var(--gold);
+      background: var(--dark);
+      transition: background 0.3s, transform 0.3s;
+    }
+    .step:hover .step-num { background: var(--gold); color: var(--black); transform: scale(1.1); }
+    .step-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 400; color: var(--cream);
+      margin-bottom: 16px;
+    }
+    .step-desc {
+      font-size: 13px; line-height: 1.8; color: var(--cream-dim); font-weight: 300;
+    }
+
+    /* ─── GALLERY ─── */
+    .gallery {
+      padding: 0; display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 300px 300px;
+    }
+    .gallery-item {
+      overflow: hidden; position: relative; cursor: pointer;
+    }
+    .gallery-item img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.8s ease, filter 0.5s;
+      filter: grayscale(30%) brightness(0.85);
+    }
+    .gallery-item:hover img { transform: scale(1.08); filter: grayscale(0%) brightness(1); }
+    .gallery-item:nth-child(1) { grid-column: 1; grid-row: 1 / 3; }
+    .gallery-item:nth-child(2) { grid-column: 2; grid-row: 1; }
+    .gallery-item:nth-child(3) { grid-column: 3; grid-row: 1; }
+    .gallery-item:nth-child(4) { grid-column: 4; grid-row: 1 / 3; }
+    .gallery-item:nth-child(5) { grid-column: 2; grid-row: 2; }
+    .gallery-item:nth-child(6) { grid-column: 3; grid-row: 2; }
+
+    /* ─── TARIFFS ─── */
+    .tariffs { background: var(--black); }
+    .tariffs-header { margin-bottom: 80px; }
+
+    .tariff-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; background: rgba(201,168,76,0.1);
+    }
+
+    .tariff-card {
+      background: var(--dark); padding: 60px 48px;
+      position: relative; overflow: hidden;
+      transition: background 0.4s;
+    }
+    .tariff-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px; background: var(--gold); opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .tariff-card:hover { background: #161616; }
+    .tariff-card:hover::before { opacity: 1; }
+
+    .tariff-card.featured {
+      background: var(--dark2);
+    }
+    .tariff-card.featured::before { opacity: 1; }
+
+    .tariff-badge {
+      display: inline-block;
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--black); background: var(--gold);
+      padding: 4px 12px; margin-bottom: 32px;
+    }
+
+    .tariff-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px; font-weight: 300; color: var(--cream);
+      margin-bottom: 8px;
+    }
+    .tariff-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; color: var(--gold);
+      margin-bottom: 40px;
+    }
+
+    .tariff-features { list-style: none; margin-bottom: 48px; }
+    .tariff-features li {
+      font-size: 13px; line-height: 1; padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      color: var(--cream-dim); font-weight: 300;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .tariff-features li::before {
+      content: '◆'; font-size: 6px; color: var(--gold); flex-shrink: 0;
+    }
+
+    .tariff-btn {
+      display: block; width: 100%; padding: 14px 0;
+      text-align: center; text-decoration: none;
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      font-weight: 600; transition: all 0.3s;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+    }
+    .tariff-btn:hover, .tariff-card.featured .tariff-btn {
+      background: var(--gold); color: var(--black);
+    }
+    .tariff-card.featured .tariff-btn:hover {
+      background: var(--gold-light);
+    }
+
+    /* ─── PRIVACY ─── */
+    .privacy {
+      background: var(--dark);
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 100px; align-items: center;
+    }
+
+    .privacy-image { position: relative; aspect-ratio: 4/5; overflow: hidden; }
+    .privacy-image img { width: 100%; height: 100%; object-fit: cover; }
+    .privacy-image-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(201,168,76,0.15) 0%, transparent 60%);
+    }
+
+    .privacy-points { margin-top: 48px; }
+    .privacy-point {
+      display: flex; gap: 24px; align-items: flex-start;
+      padding: 24px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .privacy-point-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      border: 1px solid var(--gold-dark);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+    .privacy-point-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; font-weight: 400; color: var(--cream);
+      margin-bottom: 6px;
+    }
+    .privacy-point-desc {
+      font-size: 13px; color: var(--cream-dim); font-weight: 300; line-height: 1.7;
+    }
+
+    /* ─── CTA ─── */
+    .cta-section {
+      position: relative; padding: 160px 60px;
+      text-align: center; overflow: hidden;
+    }
+    .cta-bg {
+      position: absolute; inset: 0;
+      background-image: url('images/preview__13_.webp');
+      background-size: cover; background-position: center;
+    }
+    .cta-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(0,0,0,0.82);
+    }
+    .cta-content { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+    .cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 300; color: var(--cream);
+      line-height: 1.15; margin-bottom: 24px;
+    }
+    .cta-title em { font-style: italic; color: var(--gold); }
+    .cta-sub {
+      font-size: 14px; color: var(--cream-dim); font-weight: 300;
+      line-height: 1.8; margin-bottom: 56px;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #050505; padding: 60px;
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid rgba(201,168,76,0.1);
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px; font-weight: 300; letter-spacing: 6px; color: var(--gold);
+    }
+    .footer-text {
+      font-size: 12px; color: rgba(245,240,232,0.3); font-weight: 300;
+      letter-spacing: 1px;
+    }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a {
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(245,240,232,0.3); text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+
+    /* ─── ORNAMENT DIVIDER ─── */
+    .ornament-divider {
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px; padding: 20px 0;
+    }
+    .ornament-divider-line { flex: 1; height: 1px; background: rgba(201,168,76,0.15); }
+    .ornament-divider-symbol {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; color: var(--gold-dark); opacity: 0.7;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(-8px); }
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      nav { padding: 20px 32px; }
+      .nav-links { display: none; }
+      section { padding: 80px 32px; }
+      .about, .privacy { grid-template-columns: 1fr; gap: 48px; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .steps::before { display: none; }
+      .tariff-grid { grid-template-columns: 1fr; }
+      .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gallery-item:nth-child(1),
+      .gallery-item:nth-child(4) { grid-column: auto; grid-row: auto; }
+      footer { flex-direction: column; gap: 24px; text-align: center; }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      .logo { font-size: 22px; letter-spacing: 5px; }
+      section { padding: 60px 20px; }
+      .stats { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      .gallery { grid-template-columns: 1fr 1fr; }
+      .hero-title { font-size: 42px; }
+      .cta-section { padding: 100px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="logo" href="#">QADAR<span>.UZ</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">О нас</a></li>
+    <li><a href="#how">Как работает</a></li>
+    <li><a href="#tariffs">Тарифы</a></li>
+    <li><a href="#privacy">Конфиденциальность</a></li>
+  </ul>
+  <a href="https://t.me/qadar_uz_bot" class="nav-cta" target="_blank">Подать заявку</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-slider">
+    <div class="hero-slide hero-slide-1 active"></div>
+    <div class="hero-slide hero-slide-2"></div>
+    <div class="hero-slide hero-slide-3"></div>
+    <div class="hero-slide hero-slide-4"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-ornament">
+      <div class="hero-ornament-line"></div>
+      <div class="hero-ornament-diamond"></div>
+      <div class="hero-ornament-line"></div>
+    </div>
+    <p class="hero-eyebrow">Закрытый матримониальный клуб · Ташкент</p>
+    <h1 class="hero-title">
+      Достойный союз —<br><em>начинается здесь</em>
+    </h1>
+    <p class="hero-subtitle">
+      Мы не сваха и не сайт знакомств.<br>
+      Мы — доверенный посредник для семей, которые ищут достойного партнёра для своих детей.
+    </p>
+    <div class="hero-buttons">
+      <a href="https://t.me/qadar_uz_bot" class="btn-primary" target="_blank">
+        Подать заявку
+      </a>
+      <a href="#how" class="btn-outline">Узнать больше</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll-hint">Листать</div>
+</section>
+
+<!-- ORNAMENT -->
+<div class="ornament-divider">
+  <div class="ornament-divider-line"></div>
+  <div class="ornament-divider-symbol">✦ ◆ ✦</div>
+  <div class="ornament-divider-line"></div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-image-wrap reveal">
+    <img src="images/preview__10_.webp" alt="QADAR — элегантность"/>
+    <div class="about-image-accent"></div>
+  </div>
+  <div class="about-text reveal">
+    <p class="section-tag">Наша миссия</p>
+    <h2 class="section-title">Мост между<br><em>достойными семьями</em></h2>
+    <p class="section-body">
+      В Узбекистане тысячи прекрасных молодых людей ждут своего времени.
+      Не потому что их нет — а потому что правильные пути ещё не пересеклись.
+      Агентства продают номера. Свахи работают на слух. Мы работаем иначе.
+    </p>
+    <p class="section-body" style="margin-top:20px;">
+      QADAR — это личный поиск. Мы изучаем вашу семью, ваши ценности
+      и предлагаем только тех, кто действительно подходит. 1–3 кандидата.
+      Не 10. Не список. Только те, кому можно доверять.
+    </p>
+    <blockquote class="about-quote">
+      «Я сама прошла через эту боль как мать двух дочерей.
+      QADAR — это то, чего мне не хватало.»
+      <br><small style="font-size:13px; color: var(--cream-dim); margin-top:8px; display:block;">— Основатель QADAR</small>
+    </blockquote>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-item reveal">
+    <div class="stat-number">100%</div>
+    <div class="stat-label">Верификация каждого участника</div>
+  </div>
+  <div class="stat-item reveal" style="transition-delay:0.15s">
+    <div class="stat-number">1–3</div>
+    <div class="stat-label">Кандидата — не список из 10</div>
+  </div>
+  <div class="stat-item reveal" style="transition-delay:0.3s">
+    <div class="stat-number">0</div>
+    <div class="stat-label">Публичных данных без согласия</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="how-header reveal">
+    <p class="section-tag">Процесс</p>
+    <h2 class="section-title">Как это <em>работает</em></h2>
+  </div>
+
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <h3 class="step-title">Заявка семьи</h3>
+      <p class="step-desc">Через Telegram-бот подаётся анкета от имени семьи. Не от молодого человека — от родителей или представителя.</p>
+    </div>
+    <div class="step reveal" style="transition-delay:0.1s">
+      <div class="step-num">02</div>
+      <h3 class="step-title">Верификация</h3>
+      <p class="step-desc">Мы проверяем данные, образование и соответствие уровню. Фото закрыты — полное инкогнито до взаимного интереса.</p>
+    </div>
+    <div class="step reveal" style="transition-delay:0.2s">
+      <div class="step-num">03</div>
+      <h3 class="step-title">Подбор</h3>
+      <p class="step-desc">Наш консьерж лично подбирает 1–3 кандидата. Богатые видят только богатых — уровни не смешиваются.</p>
+    </div>
+    <div class="step reveal" style="transition-delay:0.3s">
+      <div class="step-num">04</div>
+      <h3 class="step-title">Встреча семей</h3>
+      <p class="step-desc">Мы организуем первое знакомство семей в нейтральном месте. Всё конфиденциально, комфортно, по традиции.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<div class="gallery">
+  <div class="gallery-item">
+    <img src="images/preview__15_.webp" alt=""/>
+  </div>
+  <div class="gallery-item">
+    <img src="images/preview__8_.webp" alt=""/>
+  </div>
+  <div class="gallery-item">
+    <img src="images/preview__14_.webp" alt=""/>
+  </div>
+  <div class="gallery-item">
+    <img src="images/preview__3_.webp" alt=""/>
+  </div>
+  <div class="gallery-item">
+    <img src="images/preview__11_.webp" alt=""/>
+  </div>
+  <div class="gallery-item">
+    <img src="images/preview__2_.webp" alt=""/>
+  </div>
+</div>
+
+<!-- TARIFFS -->
+<section class="tariffs" id="tariffs">
+  <div class="tariffs-header reveal">
+    <p class="section-tag">Членство</p>
+    <h2 class="section-title">Выберите свой <em>уровень</em></h2>
+  </div>
+
+  <div class="tariff-grid">
+    <!-- Standard -->
+    <div class="tariff-card reveal">
+      <div class="tariff-name">Standard</div>
+      <div class="tariff-price">По запросу</div>
+      <ul class="tariff-features">
+        <li>Анкета семьи</li>
+        <li>До 3 кандидатов в месяц</li>
+        <li>100% верификация</li>
+        <li>Инкогнито по умолчанию</li>
+        <li>Поддержка через Telegram</li>
+      </ul>
+      <a href="https://t.me/qadar_uz_bot" class="tariff-btn" target="_blank">Начать</a>
+    </div>
+
+    <!-- Premium -->
+    <div class="tariff-card featured reveal" style="transition-delay:0.15s">
+      <div class="tariff-badge">Рекомендуем</div>
+      <div class="tariff-name">Premium</div>
+      <div class="tariff-price">По запросу</div>
+      <ul class="tariff-features">
+        <li>Личный менеджер-консьерж</li>
+        <li>До 5 кандидатов в месяц</li>
+        <li>Расширенная верификация</li>
+        <li>Приоритетный подбор</li>
+        <li>Сопровождение переговоров</li>
+        <li>Полная конфиденциальность</li>
+      </ul>
+      <a href="https://t.me/qadar_uz_bot" class="tariff-btn" target="_blank">Начать</a>
+    </div>
+
+    <!-- Elite -->
+    <div class="tariff-card reveal" style="transition-delay:0.3s">
+      <div class="tariff-name">Elite</div>
+      <div class="tariff-price">По запросу</div>
+      <ul class="tariff-features">
+        <li>VIP-статус, закрытый круг</li>
+        <li>Неограниченный поиск</li>
+        <li>Организация встречи семей</li>
+        <li>Нотариальная конфиденциальность</li>
+        <li>Личное сопровождение</li>
+        <li>Только один уровень — Elite</li>
+      </ul>
+      <a href="https://t.me/qadar_uz_bot" class="tariff-btn" target="_blank">Начать</a>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section class="privacy" id="privacy">
+  <div class="privacy-image reveal">
+    <img src="images/preview__7_.webp" alt="Конфиденциальность"/>
+    <div class="privacy-image-overlay"></div>
+  </div>
+  <div class="privacy-content reveal">
+    <p class="section-tag">Доверие</p>
+    <h2 class="section-title">Ваша приватность —<br><em>наш приоритет</em></h2>
+    <p class="section-body">
+      В Узбекистане репутация семьи — это всё. Мы понимаем это лучше других.
+      Поэтому безопасность данных — не функция, а основа нашей работы.
+    </p>
+
+    <div class="privacy-points">
+      <div class="privacy-point">
+        <div class="privacy-point-icon">🔒</div>
+        <div>
+          <div class="privacy-point-title">Фото закрыты по умолчанию</div>
+          <div class="privacy-point-desc">Никто не видит ваши фотографии без взаимного согласия обеих семей.</div>
+        </div>
+      </div>
+      <div class="privacy-point">
+        <div class="privacy-point-icon">✓</div>
+        <div>
+          <div class="privacy-point-title">Каждый верифицирован</div>
+          <div class="privacy-point-desc">Образование, происхождение, статус — всё проверяется до начала подбора.</div>
+        </div>
+      </div>
+      <div class="privacy-point">
+        <div class="privacy-point-icon">◆</div>
+        <div>
+          <div class="privacy-point-title">Уровни не смешиваются</div>
+          <div class="privacy-point-desc">Standard, Premium и Elite — изолированы. Вы видите только своих.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-bg"></div>
+  <div class="cta-content reveal">
+    <p class="section-tag" style="justify-content:center">Первый шаг</p>
+    <h2 class="cta-title">
+      Судьба не случайна —<br><em>она устраивается</em>
+    </h2>
+    <p class="cta-sub">
+      Оставьте заявку через наш Telegram-бот.<br>
+      Мы свяжемся с вами в течение 24 часов.
+    </p>
+    <div class="hero-buttons">
+      <a href="https://t.me/qadar_uz_bot" class="btn-primary" target="_blank">
+        Открыть Telegram-бот
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">QADAR.UZ</div>
+  <div class="footer-text">© 2025 QADAR · Ташкент, Узбекистан · Все данные защищены</div>
+  <div class="footer-links">
+    <a href="https://t.me/qadar_uz_bot" target="_blank">Telegram</a>
+    <a href="https://instagram.com/qadar.uz" target="_blank">Instagram</a>
+    <a href="mailto:info@qadar.uz">Email</a>
+  </div>
+</footer>
+
+<script>
+  // NAV SCROLL
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 80);
+  });
+
+  // HERO SLIDER
+  const slides = document.querySelectorAll('.hero-slide');
+  let current = 0;
+  setInterval(() => {
+    slides[current].classList.remove('active');
+    current = (current + 1) % slides.length;
+    slides[current].classList.add('active');
+  }, 5000);
+
+  // REVEAL ON SCROLL
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => observer.observe(r));
+</script>
+</body>
+</html>
