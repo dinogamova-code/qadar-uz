@@ -86,8 +86,8 @@ async def show_rules(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         "2️⃣ <b>NDA</b> — данные других участников строго конфиденциальны. "
         "Распространение информации преследуется.\n\n"
         "3️⃣ <b>Публичная оферта</b> — регулирует порядок услуг и ответственность сторон.\n\n"
-        "📎 <a href='https://qadar.uz/oferta'>Публичная оферта</a>\n"
-        "📎 <a href='https://qadar.uz/privacy'>Политика конфиденциальности</a>\n\n"
+        "📎 <a href='https://telegra.ph/Publichnaya-oferta-QADARUZ-05-14'>Публичная оферта</a>\n"
+        "📎 <a href='https://telegra.ph/Politika-konfidencialnosti-QADARUZ-05-14'>Политика конфиденциальности</a>\n\n"
         "<i>Нажимая «Принимаю», вы подтверждаете согласие со всеми условиями.</i>"
     )
     kb = InlineKeyboardMarkup([
