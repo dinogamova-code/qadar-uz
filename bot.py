@@ -395,6 +395,24 @@ TEXTS = {
 }
 
 # ---- BOT HANDLERS ----
+# ---- VALIDATION ----
+def validate_fio(text):
+    parts = text.strip().split()
+    return len(parts) >= 2
+
+def validate_age(text):
+    t = text.strip()
+    if not t.isdigit(): return False
+    return 18 <= int(t) <= 65
+
+def validate_contact(text):
+    import re
+    t = text.strip()
+    if t.startswith('@') and len(t) > 3: return True
+    digits = re.sub(r'[\s\-\(\)\+]', '', t)
+    return digits.isdigit() and 9 <= len(digits) <= 13
+
+
 async def start(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     db_insert(update.effective_user.id, update.effective_user.username or "")
     kb = InlineKeyboardMarkup([[
@@ -448,8 +466,24 @@ async def ask(update, ctx, idx):
     qs = TEXTS[lang(ctx)]["questions"]
     await update.message.reply_text(f"{qs[idx]}:", parse_mode="Markdown")
 
-async def q_fio(u,c):      c.user_data["fio"]=u.message.text.strip(); await ask(u,c,1); return Q_AGE
-async def q_age(u,c):      c.user_data["age"]=u.message.text.strip(); await ask(u,c,2); return Q_NATION
+async def q_fio(u,c):
+    text = u.message.text.strip()
+    if not validate_fio(text):
+        if lang(c) == "uz":
+            await u.message.reply_text("\u26a0\ufe0f To\u2018liq ismingizni kiriting (familiya va ism)\n_Masalan: Karimov Jahongir_", parse_mode="Markdown")
+        else:
+            await u.message.reply_text("\u26a0\ufe0f \u0423\u043a\u0430\u0436\u0438\u0442\u0435 \u043f\u043e\u043b\u043d\u043e\u0435 \u0438\u043c\u044f \u2014 \u0444\u0430\u043c\u0438\u043b\u0438\u044f \u0438 \u0438\u043c\u044f.\n_\u041d\u0430\u043f\u0440\u0438\u043c\u0435\u0440: \u041a\u0430\u0440\u0438\u043c\u043e\u0432 \u0416\u0430\u0445\u043e\u043d\u0433\u0438\u0440_", parse_mode="Markdown")
+        return Q_FIO
+    c.user_data["fio"]=text; await ask(u,c,1); return Q_AGE
+async def q_age(u,c):
+    text = u.message.text.strip()
+    if not validate_age(text):
+        if lang(c) == "uz":
+            await u.message.reply_text("\u26a0\ufe0f Yoshni to\u2018g\u2018ri kiriting (18 dan 65 gacha)\n_Masalan: 27_", parse_mode="Markdown")
+        else:
+            await u.message.reply_text("\u26a0\ufe0f \u0423\u043a\u0430\u0436\u0438\u0442\u0435 \u0432\u043e\u0437\u0440\u0430\u0441\u0442 \u0447\u0438\u0441\u043b\u043e\u043c \u043e\u0442 18 \u0434\u043e 65.\n_\u041d\u0430\u043f\u0440\u0438\u043c\u0435\u0440: 27_", parse_mode="Markdown")
+        return Q_AGE
+    c.user_data["age"]=text; await ask(u,c,2); return Q_NATION
 async def q_nation(u,c):   c.user_data["nationality"]=u.message.text.strip(); await ask(u,c,3); return Q_CITY
 async def q_city(u,c):     c.user_data["city"]=u.message.text.strip(); await ask(u,c,4); return Q_PROPISKA
 async def q_propiska(u,c): c.user_data["propiska"]=u.message.text.strip(); await ask(u,c,5); return Q_LIVING
@@ -468,7 +502,15 @@ async def q_about(u,c):   c.user_data["about"]=u.message.text.strip(); await ask
 async def q_looking(u,c): c.user_data["looking"]=u.message.text.strip(); await ask(u,c,13); return Q_CONTACT
 
 async def q_contact(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
-    ctx.user_data["contact"] = update.message.text.strip()
+    text = update.message.text.strip()
+    if not validate_contact(text):
+        if lang(ctx) == "uz":
+            msg = "⚠️ Telefon raqami yoki Telegram username kiriting.\n_Masalan: +998901234567 yoki @username_"
+        else:
+            msg = "⚠️ Укажите номер телефона или Telegram username.\n_Например: +998901234567 или @username_"
+        await update.message.reply_text(msg, parse_mode="Markdown")
+        return Q_CONTACT
+    ctx.user_data["contact"] = text
     # Ask transport question
     btns = TEXTS[lang(ctx)]["transport_btns"]
     kb = InlineKeyboardMarkup([
