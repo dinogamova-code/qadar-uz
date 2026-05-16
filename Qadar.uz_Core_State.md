@@ -1,6 +1,6 @@
 # Qadar.uz — Core State
-**Дата среза:** 16.05.2026
-**Статус:** АКТИВНЫЙ ПРОЕКТ
+**Дата среза:** 16.05.2026 — финал дня
+**Статус:** АКТИВНЫЙ ПРОЕКТ ✅
 
 ---
 
@@ -12,15 +12,16 @@
 @qadaruz_bot (Telegram)
   ↓
 DigitalOcean сервер 167.172.95.149
-  ├── bot.py (systemd: qadar.service, PID ~282671)
+  ├── bot.py (systemd: qadar.service, ~65KB)
+  ├── qadar.db (SQLite, 34 колонки)
   ├── trading_bot.py (systemd: trading.service)
   └── /root/qadar_env/ (Python venv)
   ↓
 Google Sheets (QADAR Заявки)
   ↑
-Apps Script Webhook
+Apps Script Webhook (новый URL)
   ↓
-Admin (Telegram ID: 1995391)
+Admin Telegram ID: 1995391
 ```
 
 **Сайт:**
@@ -46,25 +47,26 @@ qadar.uz
 | GITHUB | github.com/dinogamova-code/qadar-uz |
 | EMAIL | qadaruz.official@gmail.com |
 | INSTAGRAM | @qadaruz.uz |
+| SSH_KEY | ed25519 asus@DESKTOP-R07P0HC |
 
 ---
 
 ## 📋 ЮРИДИЧЕСКИЕ ДОКУМЕНТЫ
 
 - Оферта: https://telegra.ph/Publichnaya-oferta-QADARUZ-05-14
-- Политика конфиденциальности: https://telegra.ph/Politika-konfidencialnosti-QADARUZ-05-14
+- Политика: https://telegra.ph/Politika-konfidencialnosti-QADARUZ-05-14
 
 ---
 
 ## 💰 ТАРИФЫ
 
-| Тариф | Членство | Суюнчи |
-|---|---|---|
-| Standard | $100/год | $1000 |
-| Premium | $200/год | $1500 |
-| Elite | $300/год | $2000–$2500 |
+| Тариф | Членство |
+|---|---|
+| Standard | $100/год |
+| Premium | $200/год |
+| Elite | $300/год |
 
-Суюнчи выплачивается только при фатихе или свадьбе.
+**Суюнчи:** $1000–$2500 (при фатихе или свадьбе)
 
 ---
 
@@ -72,24 +74,21 @@ qadar.uz
 
 ```
 /start
-  → Язык (🇷🇺 Русский / 🇺🇿 Ўзбекча)
+  → Язык (Русский / Ўзбекча)
   → Правила + NDA
   → Выбор пула:
       🌸 Впервые (QADAR)
       🌿 Хочу начать заново (Yangi Hayot)
   → Сторона (девушка / парень)
-  → Анкета 14 шагов:
-      ФИО → Возраст → Национальность → Город → Прописка
-      → Жильё → Семья → Образование → Работа
-      → Авто → Финансы → О себе → Ищу → Контакт
+  → Анкета 14 шагов
   → Транспорт (4 кнопки)
   → Фото кандидата
   → Выбор тарифа
   → Оплата Click → Скриншот
   → KYC (паспорт → диплом → справки → видео)
-  → Google Sheets
+  → Google Sheets + SQLite
 
-  [Yangi Hayot — дополнительно после контакта:]
+  [Yangi Hayot — дополнительно:]
   → Есть ли дети? (Да/Нет)
   → Возраст детей (если Да)
   → Готовность принять детей партнёра?
@@ -98,64 +97,55 @@ qadar.uz
 
 ---
 
-## 🗄️ GOOGLE SHEETS — КОЛОНКИ
+## ✅ ВАЛИДАЦИЯ
 
-| # | Колонка | Описание |
-|---|---|---|
-| A | Дата | Автоматически |
-| B | Тип | Сторона (девушка/парень) |
-| C | ФИО | Полное имя |
-| D | Возраст | Число |
-| E | Город | + район |
-| F | Образование | Уровень |
-| G | Работа | Место работы |
-| H | О кандидате | О себе |
-| I | Ищет | Критерии партнёра |
-| J | Контакт | Телефон или @username |
-| K | Тариф | Standard/Premium/Elite + статус |
-| L | Пул | QADAR / Yangi Hayot |
-| M | Дети | Да / Нет |
-| N | Возраст детей | Текст или — |
-| O | Принять детей | Да / Нет / Открыта для обсуждения |
-| P | Статус | ❌ Не добавлен (Admin-панель) |
-| Q | Заметки | ❌ Не добавлен (Admin-панель) |
+| Поле | Правило |
+|---|---|
+| ФИО | Минимум 2 слова |
+| Возраст | Число 18–65 |
+| Контакт | +998XXXXXXXXX или @username |
 
 ---
 
-## 🌐 САЙТ — СТРУКТУРА
+## 👑 ADMIN-ПАНЕЛЬ (Telegram)
 
-**Хостинг:** GitHub Pages → qadar.uz (DNS: IT Service Group)
-**Файл:** index.html (44630 байт)
+| Команда | Действие |
+|---|---|
+| `/admin` | Список 15 заявок |
+| `/view ID` | Полная анкета (34 поля) |
+| `/approve ID` | Одобрить |
+| `/reject ID` | Отклонить |
+| `/match ID1 ID2` | Соединить кандидатов |
 
-**Секции:**
-- Hero слайдер
-- О нас
-- Боли клиента
-- KYC процесс
-- Тарифы (Standard/Premium/Elite)
-- Галерея
-- Суюнчи (без цен)
-- Как подать заявку (цены: $100/$200/$300, суюнчи: при договорённости)
-- CTA
-- 🌿 Yangi Hayot секция
-- Футер (Telegram + Instagram + Email)
+---
 
-**SEO:**
-- Google Search Console: подключён
-- sitemap.xml: добавлен
-- robots.txt: добавлен
-- OG теги: добавлены
+## 🗄️ GOOGLE SHEETS — КОЛОНКИ
+
+A: Дата | B: Тип | C: ФИО | D: Возраст | E: Город
+F: Образование | G: Работа | H: О кандидате | I: Ищет
+J: Контакт | K: Тариф | L: Пул | M: Дети
+N: Возраст детей | O: Принять детей
+
+---
+
+## 🌐 САЙТ
+
+**Хостинг:** GitHub Pages → qadar.uz
+**Секции:** Hero → О нас → Боли → KYC → Тарифы →
+Галерея → Суюнчи → Регистрация → CTA → Yangi Hayot → Футер
+**SEO:** Search Console ✅ | sitemap.xml ✅ | robots.txt ✅ | OG теги ✅
+**Индексация Google:** ждём 3-7 дней (с 16.05.2026)
 
 ---
 
 ## 🚫 ЖЁСТКИЕ ОГРАНИЧЕНИЯ
 
-1. **DNS** — менять только через IT Service Group. Самостоятельно НЕ трогать.
-2. **Сайт** — остаётся на GitHub Pages. На сервер НЕ переносить без разрешения.
-3. **DigitalOcean сервер** — только для бота. Не для сайта.
-4. **Данные клиентов** — не переносить на Notion/Airtable/внешние платформы.
-5. **Токен бота** — не хранить в открытом GitHub репозитории.
-6. **IT Service Group** — не писать им без разрешения.
+1. DNS — менять только через IT Service Group
+2. Сайт — остаётся на GitHub Pages
+3. Сервер — только для бота
+4. Данные клиентов — не на Notion/Airtable
+5. Токен бота — не в открытом GitHub
+6. IT Service Group — не писать без разрешения
 
 ---
 
@@ -168,45 +158,89 @@ qadar.uz
 | Yangi Hayot — второй пул | ✅ |
 | Google Sheets интеграция | ✅ |
 | Сайт qadar.uz | ✅ |
-| Yangi Hayot секция на сайте | ✅ |
-| OG теги + SEO | ✅ |
+| OG теги + SEO + robots.txt | ✅ |
 | Google Search Console | ✅ |
 | Самозанятость Soliq | ✅ |
 | Click Business заявка | ✅ ждём менеджера |
 | Токен бота обновлён | ✅ |
 | Claude Code → сервер SSH | ✅ |
-| Admin-панель куратора | ❌ в работе |
-| Instagram посты 03-09 | ⏳ по расписанию |
+| Admin-панель куратора | ✅ |
+| Instagram посты 01-02 | ✅ опубликованы |
+| Instagram посты 03-09 | ⏳ по расписанию 18:00 |
 | Yangi Hayot Instagram посты | ❌ |
+| Компьютер организован | ✅ 636MB освобождено |
 
 ---
 
-## 🔜 СЛЕДУЮЩИЙ ШАГ
-
-**Admin-панель куратора** — Telegram команды в боте:
-- `/admin` — список новых заявок
-- `/view ID` — полная анкета
-- `/approve ID` — одобрить
-- `/reject ID` — отклонить
-- `/match ID1 ID2` — соединить кандидатов
-
-Добавить в Google Sheets колонки P (Статус) и Q (Заметки куратора).
-
----
-
-## 🏗️ ИНФРАСТРУКТУРА СЕРВЕРА
+## 🧠 ВТОРОЙ МОЗГ
 
 ```
-/root/
-├── bot.py (63KB+ — основной бот)
-├── qadar_env/ (Python venv)
-├── mt-project/ (trading bot)
-└── .ssh/authorized_keys (ed25519 asus@DESKTOP-R07P0HC)
+Obsidian (локально, C:\Users\Asus\Documents\SecondBrain\)
+  ├── 28 заметок
+  ├── QADAR/ EDUCATION/ FAMILY/ FINANCE/
+  ├── LEGAL/ NEGOTIATIONS/ REAL_ESTATE/ _SYSTEM/
+  └── context-summary.md ← главный файл памяти
+  ↓ автосинхронизация каждый час
+GitHub: dinogamova-code/second-brain (приватный)
+  ↓
+n8n: "Second Brain - GitHub Reader"
+  └── Webhook → GitHub → Claude (OpenRouter) → Telegram
+  ↓
+Telegram бот: Dila_SecondBrain_bot
+  Token: 8818277058:AAEPRxQ6wB4kAnk7oYBAGgHrHsUWasVcJMw
+```
 
-/var/www/qadar/ (nginx — резерв, не используется)
-/etc/nginx/ (nginx установлен, сайт отключён)
+⚠️ Добавить Qadar.uz_Core_State.md в context-summary.md
+
+---
+
+## 🤖 N8N — ПЛАН ЗАВТРА (приоритет)
+
+| # | Воркфлоу | Время | Результат |
+|---|---|---|---|
+| 1 | Умные уведомления о заявках | 30 мин | Нет ручного мониторинга |
+| 2 | AI скоринг кандидатов | 1 час | Куратор видит только 7+ |
+| 3 | Еженедельный отчёт | 30 мин | Авто-аналитика |
+| 4 | Obsidian автообновление | 45 мин | Актуальная статистика |
+| 5 | Instagram автопостинг | 2 часа | 18 постов без труда |
+
+---
+
+## 📁 СТРУКТУРА КОМПЬЮТЕРА
+
+```
+C:\Users\Asus\Documents\
+├── QADAR\
+│   ├── bot.py, oferta.md, privacy.md
+│   ├── Qadar.uz_Core_State.md
+│   ├── Code.gs (Apps Script)
+│   ├── Сайт\ (index.html + 16 фото)
+│   └── Instagram\ (партия 1, 2, Yangi Hayot)
+├── Клиенты\
+│   ├── Ibrahim\ (14 PDF)
+│   └── Mirmuhammad\ (5 файлов)
+├── Личное\
+│   └── Виза Малайзия\ (3 PDF)
+└── SecondBrain\ (Obsidian)
 ```
 
 ---
 
-*Файл сгенерирован [Архивариусом] | Qadar.uz Multi-Agent System*
+## 🔜 ЗАВТРА
+
+1. n8n воркфлоу 1-5 (автоматизация QADAR)
+2. Малайзия — подготовка Мухаммеда к IELTS (23 мая)
+3. Обновить context-summary.md в Obsidian
+
+---
+
+## ⏰ НАПОМИНАНИЯ
+
+- 19-20 мая: проверить site:qadar.uz в Google
+- 23 мая: IELTS Мухаммед
+- 30 мая: IELTS Ибрагим
+- Ждём: Click Business менеджера (1-3 дня)
+
+---
+
+*[Архивариус] | Qadar.uz 8-Agent System | 16.05.2026 — конец дня*
